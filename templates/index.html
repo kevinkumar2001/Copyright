@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Processing App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="{{ url_for('static', filename='scripts.js') }}" defer></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Video Processing App</h1>
+        <form id="upload-form" method="POST" enctype="multipart/form-data">
+            <div class="file-upload-wrapper">
+                <input type="file" name="file" id="file-input" accept="video/*" required>
+                <label for="file-input" class="file-upload-label">
+                    <span id="file-name">Choose a video file...</span>
+                </label>
+            </div>
+            <button type="submit" id="upload-button">Upload and Process Video</button>
+        </form>
+        
+        <div id="loading-animation" class="loading-animation">
+            <div class="spinner"></div>
+            <p>Processing Video...</p>
+        </div>
+
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul id="messages">
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+    </div>
+</body>
+</html>
