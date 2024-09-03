@@ -5,6 +5,6 @@ WTForms==3.0.1
 opencv-python-headless==4.8.1.78
 moviepy==1.0.3
 librosa==0.10.0.post2
-SoundFile==0.10.3.post1
+SoundFile>=0.12.1  # Update to match librosa requirements
 scipy==1.11.2
 Pillow==10.0.0
