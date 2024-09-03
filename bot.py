@@ -52,8 +52,14 @@ def elastic_deformation(frame):
     dx = gaussian_filter((random_state.rand(*shape) * 2 - 1), sigma) * alpha
     dy = gaussian_filter((random_state.rand(*shape) * 2 - 1), sigma) * alpha
     x, y = np.meshgrid(np.arange(shape[1]), np.arange(shape[0]))
-    indices = np.reshape(y+dy, (-1, 1)), np.reshape(x+dx, (-1, 1))
-    return map_coordinates(frame, indices, order=1, mode='reflect').reshape(shape)
+    indices = np.reshape(y + dy, (-1, 1)), np.reshape(x + dx, (-1, 1))
+    
+    # Correct the shape for map_coordinates function
+    warped_image = np.zeros_like(frame)
+    for i in range(frame.shape[2]):
+        warped_image[..., i] = map_coordinates(frame[..., i], indices, order=1, mode='reflect').reshape(shape)
+    
+    return warped_image
 
 def subtle_perspective_transform(frame):
     h, w = frame.shape[:2]
