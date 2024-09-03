@@ -1,6 +1,6 @@
 import cv2
 import numpy as np
-from moviepy.editor import VideoFileClip, AudioFileClip, CompositeVideoClip
+from moviepy.editor import VideoFileClip, AudioFileClip
 from scipy.io import wavfile
 from scipy import signal
 import random
@@ -75,6 +75,9 @@ def add_invisible_qr(frame):
     return frame + qr_resized.reshape(frame.shape[0], frame.shape[1], 1) * 0.1
 
 def add_hidden_text(frame):
+    # Ensure frame is in uint8 format
+    frame = (frame * 255).astype(np.uint8) if frame.dtype != np.uint8 else frame
+
     text = ''.join(random.choices(string.ascii_uppercase + string.digits, k=20))
     img_pil = Image.fromarray(frame)
     draw = ImageDraw.Draw(img_pil)
